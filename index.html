@@ -6,6 +6,12 @@
   <meta name="viewport" content="width=device-width">
   <title>replit</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+  <script>
+
+Parse.initialize("otEsDS2DSTpzFGPPlCHYusggLWCVmVsQWau0YUHN","ZpJ5ULw1WAz1ZgHGmMKKVGIzQffAIXKZ5CRmKgtu"); 
+  Parse.serverURL = "https://parseapi.back4app.com/";
+</script>
 </head>
 
 <body>
@@ -19,8 +25,45 @@
   -->
   <script src="https://replit.com/public/js/replit-badge-v2.js" theme="dark" 
     position="bottom-right"></script   
-  
+
+    <h1>JS SDK</h1>   
+    <input id="username" type="text"     placeholder="Username"/>
+    <input id="email" type="email" placeholder="Email"/>
+    <input id="password" type="password" placeholder="Password" />
+    <button id="createButton">Create User</button>
+
+      
       <a href="Pagina2.html">LINK</a>
 </body>
 
+<script>
+// Create a new User
+async function createParseUser() {
+  // Creates a new Parse "User" object, which is created by default in your Parse app
+  let user = new Parse.User();
+  // Set the input values to the new "User" object
+  user.set("username", document.getElementById("username").value);
+  user.set("email", document.getElementById("email").value);
+  user.set("password", document.getElementById("password").value);
+  try {
+    // Call the save method, which returns the saved object if successful
+    user = await user.save();
+    if (user !== null) {
+      // Notify the success by getting the attributes from the "User" object, by using the get method (the id attribute needs to be accessed directly, though)
+      alert(
+        `New object created with success! ObjectId: ${
+          user.id
+        }, ${user.get("username")}`
+      );
+    }
+  } catch (error) {
+    alert(`Error: ${error.message}`);
+  }
+}
+
+// Add on click listener to call the create parse user function
+document.getElementById("createButton").addEventListener("click", async function () {
+  createParseUser();
+});
+</script>
 </html>
